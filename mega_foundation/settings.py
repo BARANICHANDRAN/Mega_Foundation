@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'web-production-c7b10.up.railway.app',
+    'https://mega-foundation.onrender.com',
     'localhost',
     '127.0.0.1',
 ]
