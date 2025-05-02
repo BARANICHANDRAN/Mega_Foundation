@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Issues List - Mega Foundation</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/Bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: -1;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+        .back-btn {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .back-btn:hover {
+            background: #002b57;
+        }
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .issue-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .issue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .issue-card h3 {
+            margin: 0 0 1rem 0;
+            color: #004080;
+            font-size: 1.3rem;
+        }
+        .issue-card p {
+            margin: 0.5rem 0;
+            color: #333;
+            line-height: 1.5;
+        }
+        .issue-img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .empty-message {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="/static/images/logo.png" alt="Mega Foundation Logo" class="logo">
+            <h1>Issues List</h1>
+        </div>
+        <a href="{% url 'admin_page' %}" class="back-btn">Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        <div class="issues-grid">
+            {% for issue in issues %}
+            <div class="issue-card">
+                <h3>{{ issue.name }}</h3>
+                <p><strong>Contact:</strong> {{ issue.contact }}</p>
+                <p><strong>Location:</strong> {{ issue.location }}</p>
+                <p><strong>Issue Type:</strong> {{ issue.issue_type }}</p>
+                <p><strong>Description:</strong> {{ issue.description }}</p>
+                {% if issue.issue_img %}
+                <img src="{{ issue.issue_img.url }}" alt="Issue Image" class="issue-img">
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="empty-message">
+                No issues found.
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> 

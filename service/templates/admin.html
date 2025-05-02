@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Mega Foundation</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/Bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: -1;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .dashboard {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .stat-card h3 {
+            margin: 0 0 1rem 0;
+            color: #004080;
+            font-size: 1.2rem;
+        }
+        .stat-card p {
+            font-size: 2.5rem;
+            margin: 0;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        .action-btn {
+            background: #004080;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .action-btn:hover {
+            background: #002b57;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="/static/images/logo.png" alt="Mega Foundation Logo" class="logo">
+            <h1>Admin Dashboard</h1>
+        </div>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </header>
+
+    <div class="dashboard">
+        <div class="stats-grid">
+            <a href="{% url 'issue_list' %}" class="stat-card">
+                <h3>Total Issues</h3>
+                <p>{{ total_issues }}</p>
+            </a>
+            <a href="{% url 'volunteer_list' %}" class="stat-card">
+                <h3>Total Volunteers</h3>
+                <p>{{ total_volunteers }}</p>
+            </a>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'add_issue' %}" class="action-btn">Add New Issue</a>
+            <a href="{% url 'add_volunteer' %}" class="action-btn">Add New Volunteer</a>
+        </div>
+    </div>
+</body>
+</html>
