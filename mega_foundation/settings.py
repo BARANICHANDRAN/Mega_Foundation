@@ -26,13 +26,15 @@ SECRET_KEY = 'django-insecure-ujj(exx----!kymph4%s=sa-8(o*kz@7uv2nssgb3e&v7mb1y2
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'megafoundation-production.up.railway.app',
+    'mega-foundation.onrender.com'
     'web-production-c7b10.up.railway.app',
     'https://mega-foundation.onrender.com',
     'localhost',
     '127.0.0.1',
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-c7b10.up.railway.app/',
+    'https://megafoundation-production.up.railway.app/',
 ]
 
 # Application definition
