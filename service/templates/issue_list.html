@@ -43,19 +43,24 @@
             height: 40px;
             width: auto;
         }
+        .header-title {
+            color: white;
+            margin: 0;
+            font-size: 1.5rem;
+        }
         .back-btn {
-            background: #004080;
+            background: #007BFF;
             color: white;
             border: none;
             padding: 0.5rem 1rem;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             font-weight: 600;
             transition: background 0.3s;
         }
         .back-btn:hover {
-            background: #002b57;
+            background: #0056b3;
         }
         .container {
             padding: 2rem;
@@ -70,8 +75,9 @@
         .issue-card {
             background: rgba(255, 255, 255, 0.9);
             padding: 1.5rem;
-            border-radius: 15px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .issue-card:hover {
@@ -92,7 +98,7 @@
             max-width: 100%;
             height: auto;
             margin-top: 1rem;
-            border-radius: 8px;
+            border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .empty-message {
@@ -101,7 +107,73 @@
             font-size: 1.2rem;
             padding: 2rem;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        .filters {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+        }
+        .filters form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .filter-group label {
+            font-weight: 600;
+            color: #004080;
+            font-size: 0.9rem;
+        }
+        .filter-group select {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            min-width: 200px;
+            font-size: 1rem;
+        }
+        .filter-group select:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+        .filter-btn {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            align-self: flex-end;
+        }
+        .filter-btn:hover {
+            background: #0056b3;
+        }
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            align-self: flex-end;
+            text-decoration: none;
+        }
+        .reset-btn:hover {
+            background: #5a6268;
         }
     </style>
 </head>
@@ -109,12 +181,37 @@
     <header>
         <div class="header-content">
             <img src="/static/images/logo.png" alt="Mega Foundation Logo" class="logo">
-            <h1>Issues List</h1>
+            <h1 class="header-title">Issues List</h1>
         </div>
         <a href="{% url 'admin_page' %}" class="back-btn">Back to Dashboard</a>
     </header>
 
     <div class="container">
+        <div class="filters">
+            <form method="get">
+                <div class="filter-group">
+                    <label for="location">Location:</label>
+                    <select name="location" id="location">
+                        <option value="">All Locations</option>
+                        {% for loc in locations %}
+                        <option value="{{ loc }}" {% if selected_location == loc %}selected{% endif %}>{{ loc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="issue_type">Issue Type:</label>
+                    <select name="issue_type" id="issue_type">
+                        <option value="">All Types</option>
+                        {% for type in issue_types %}
+                        <option value="{{ type }}" {% if selected_type == type %}selected{% endif %}>{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="filter-btn">Apply Filters</button>
+                <a href="{% url 'issue_list' %}" class="reset-btn">Reset</a>
+            </form>
+        </div>
+
         <div class="issues-grid">
             {% for issue in issues %}
             <div class="issue-card">
@@ -129,7 +226,7 @@
             </div>
             {% empty %}
             <div class="empty-message">
-                No issues found.
+                <p>No issues found.</p>
             </div>
             {% endfor %}
         </div>
